@@ -62,7 +62,7 @@ def InitialInspect(data_frame):
 def loadDataframe():
     dataframe = pd.read_csv("Dataset/Verified/cost_of_living_verified.csv")
     dataframe["affordability_rule"] = (
-        dataframe["local_purchasing_power"] / dataframe["cost_of_living_plus_rent_index"]
+        dataframe["local_purchasing_power_index"] / dataframe["cost_of_living_plus_rent_index"]
     )
     return dataframe
 

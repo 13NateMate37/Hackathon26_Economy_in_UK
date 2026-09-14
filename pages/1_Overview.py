@@ -21,7 +21,7 @@ western_europe = [
 ]
 
 # Isolating a copy of the dataframe
-group_df = df[df["country"].isin(western_europe)].copy
+group_df = df[df["country"].isin(western_europe)].copy()
 
 st.title("Western Europe Affordability Overview")
 
@@ -51,3 +51,76 @@ st.write(
     interpreted as an official affordability threshold.
     """
 )
+
+# Creating metrics for displaying
+latest_year = group_df["year"].max()
+
+latest_df = group_df[
+    group_df["year"] == latest_year
+].copy()
+
+best_country = (
+    latest_df
+    .sort_values("affordability_rule", ascending=False)
+    .iloc[0]
+)
+
+highest_cost = (
+    latest_df
+    .sort_values("cost_of_living_plus_rent_index", ascending=False)
+    .iloc[0]
+)
+
+highest_power = (
+    latest_df
+    .sort_values("local_purchasing_power_index", ascending=False)
+    .iloc[0]
+)
+
+st.caption(f"Latest available data: {latest_year}")
+
+# Creating streamlit columns to display the metric 
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        "Strongest Affordability Balance",
+        best_country["country"],
+        f'{best_country["affordability_rule"]:.2f}'
+    )
+
+with col2:
+    st.metric(
+        "Highest Cost + Rent",
+        highest_cost["country"],
+        f'{highest_cost["cost_of_living_plus_rent_index"]:.1f}'
+    )
+
+with col3:
+    st.metric(
+        "Highest Purchasing Power",
+        highest_power["country"],
+        f'{highest_power["local_purchasing_power_index"]:.1f}'
+    )
+
+st.subheader(f"Affordability Ranking - {latest_year}")
+
+ranking = (
+    latest_df[
+        [
+            "country",
+            "cost_of_living_plus_rent_index",
+            "local_purchasing_power_index",
+            "affordability_rule"
+        ]
+    ]
+    .sort_values(
+        "affordability_rule",
+        ascending=False
+    )
+    .reset_index(drop=True)
+)
+
+ranking.index = ranking.index + 1
+
+st.dataframe(ranking)
