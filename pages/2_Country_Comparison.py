@@ -75,4 +75,38 @@ selected_measure = st.selectbox(
     options=list(measure_options.keys())
 )
 
+# Storing and declaring variables
 measure_column = measure_options[selected_measure]
+
+st.subheader(f"{selected_measure} - {selected_year}")
+
+# Creating the viusuals
+chart_data = (
+    comparison_df[
+        ["country", measure_column]
+    ]
+    .sort_values(measure_column, ascending=False)
+    .set_index("country")
+)
+
+st.bar_chart(chart_data)
+
+st.subheader("Detailed Comparison")
+
+# Storing the Tools features
+comparison_table = comparison_df[
+    [
+        "country",
+        "cost_of_living_index",
+        "rent_index",
+        "cost_of_living_plus_rent_index",
+        "groceries_index",
+        "restaurant_price_index",
+        "local_purchasing_power_index",
+        "affordability_rule"
+    ]
+].copy()
+
+comparison_table = comparison_table.set_index("country")
+
+st.dataframe(comparison_table)
