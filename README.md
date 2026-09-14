@@ -220,7 +220,7 @@ Areeba's EDA focused on:
 ### Areeba's EDA Notebook
 
 **Areeba_EDA.ipynb:**  
-https://github.com/Oliver-code26/Hackathon_Where_You_Wanna_Live/blob/main/Areeba_EDA.ipynb
+https://github.com/Oliver-code26/Hackathon_Where_You_Wanna_Live/blob/main/jupyter_notebooks/Areeba_EDA.ipynb
 
 ---
 
