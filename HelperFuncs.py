@@ -58,7 +58,13 @@ def InitialInspect(data_frame):
 
 
 # Cache for streamlit
-# @st.cache_data
-# def loadDataframe():
-#     dataframe = pd.read_csv("Dataset/Cleaned/student_mat_cleaned.csv")
-#     return dataframe
+@st.cache_data
+def loadDataframe():
+    dataframe = pd.read_csv("Dataset/Verified/cost_of_living_verified.csv")
+    dataframe["affordability_rule"] = (
+        dataframe["local_purchasing_power_index"] / dataframe["cost_of_living_plus_rent_index"]
+    )
+    return dataframe
+
+# Caching the addiotanl column as it wasn't added into the csv.
+
